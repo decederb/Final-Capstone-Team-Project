@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pittsburgh Map</title>
+    <style>
+        #map{
+            height: 500px;
+            width: 100%;
+        }
+        iconImage{
+            height: 1px;
+            width: 1px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Landmarks of Pittsburgh</h1>
+    <div id="map"></div>
+    <script>
+        function initMap(){
+            // Map options
+            var options = {
+                zoom: 13,
+                center: {lat: 40.4406, lng: -79.9959}
+            }
+
+           
+            // New map
+            var map = new google.maps.Map(document.getElementById('map'), options);
+
+            // Listen for click on map
+            google.maps.event.addListener(map, 'click', 
+            function(event){
+                addMarker({coords:event.latLng});
+            });
+        
+
+           var markers = [
+               {
+                   coords:{lat:40.4497,lng:-79.9863},
+                   content: '<h1>Lotus Food Company</h1>',
+                   iconImage: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png'
+               },
+               {
+                   coords:{lat:40.4499,lng:-79.9860},
+                   content: "<h1>Robert Wholey's</h1>",
+                   iconImage: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png'
+               },
+               {
+                   coords:{lat:40.4499,lng:-79.9860},
+                   content: "<h1>Robert Wholey's</h1>",
+                   iconImage: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png'
+               },
+
+           ];
+
+           // Loop through markers
+           for (var i = 0; i < markers.length; i++){
+               addMarker(markers[i]);
+           }
+            // Add marker function
+            function addMarker(props){
+                var marker = new google.maps.Marker({
+                position: props.coords,
+                map: map
+            });
+
+            // Check for custom icon
+            if(props.iconImage){
+                // Set icon image
+                marker.setIcon(props.iconImage);
+            }
+
+            //Check content
+            if(props.content){
+                var infoWindow = new google.maps.InfoWindow({
+                content: props.content
+            });
+
+            marker.addListener('click', function(){
+                infoWindow.open(map, marker);
+            });
+            }
+            }
+        }
+    </script>
+
+    <script
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAf0lca5QyoVKl9ZjVY46xTYoZh0e6pjY0&callback=initMap&v=weekly"
+    defer
+  ></script>
+</body>
+</html>
